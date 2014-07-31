@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Threadr Test Suite</title>
+        <link rel="stylesheet" media="all" href="vendor/mocha.css" />
+        <style>
+            hr {border: none; border-top: 1px solid #365;}
+            #mocha {max-width: 800px; margin: 40px auto;}
+            #mocha header {font-size: 14px; font-style: italic;}
+            #mocha header a {color: #365;}
+            #mocha header #title {font-size: 40px; text-decoration: none;}
+            #mocha .test.pass.fast .duration {color: #333; display: inline;}
+            #mocha .test pre.error {max-height: 150px;}
+            #mocha .test a.replay {display: none;}
+            #mocha-stats {background: #FFF; top: 0; right: 0; padding: 8px 10px 6px 10px !important; border-bottom-left-radius: 7px; -webkit-box-shadow: 0px 1px 2px #365; color: #365;}
+        </style>
+    </head>
+    <body>
+
+        <div id="mocha"><header>
+            <a href="?" id="title">Threadr Test Suite</a>
+            <hr />
+            <a href="https://github.com/bbuecherl/Threadr" target="_blank">Threadr</a>
+            <hr />
+            Tests powered by <a href="http://visionmedia.github.io/mocha/" target="_blank">mocha</a>,
+            <a href="http://chaijs.com" target="_blank">chai</a> and
+            <a href="http://sinonjs.org" target="_blank">sinon</a>
+            <hr />
+            <span id="stats"></span>
+            <hr />
+        </header></div>
+
+        <script src="vendor/mocha.js" type="text/Javascript"></script>
+        <script src="vendor/chai.js" type="text/Javascript"></script>
+        <script src="vendor/sinon.js" type="text/Javascript"></script>
+
+        <script src="../src/intro.js" type="text/Javascript"></script>
+        <script src="../src/ajax.js" type="text/Javascript"></script>
+        <script src="../src/emitter.js" type="text/Javascript"></script>
+        <script src="../src/worker.js" type="text/Javascript"></script>
+        <script src="../src/thread.js" type="text/Javascript"></script>
+        <script src="../src/threadr.js" type="text/Javascript"></script>
+
+        <script type="text/Javascript">
+            // preperation code
+            mocha.setup( "bdd" );
+            var expect = chai.expect;
+
+            // generate user agent stats
+            document.getElementById( "stats" ).innerHTML = "UA: " +
+                window.navigator.userAgent + "<br />Worker: " +
+                ( Threadr.supports.worker ? "true" : "false" ) + " | WS: " +
+                ( Threadr.supports.websocket ? "true" : "false" ) +
+                " | indexedDB: " + ( Threadr.supports.indexeddb ? "true" :
+                    "false" );
+        </script>
+
+        <script src="tests/core/threadr.js" type="text/Javascript"></script>
+        <script src="tests/core/thread.js" type="text/Javascript"></script>
+
+        <script src="test.js" type="text/Javascript"></script>
+
+        <script type="text/Javascript">
+            // run
+            mocha.run( );
+        </script>
+    </body>
+</html>

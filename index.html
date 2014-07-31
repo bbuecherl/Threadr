@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Threadr.js test</title>
+    </head>
+    <body>
+        Latest Prime: <span id="prime"></span>
+        <script src="dist/threadr.min.js"></script>
+        <script>
+            var prime = document.getElementById( "prime" );
+            Threadr.url = "dist/runnable.min.js";
+
+            var t = Threadr.spawn( function( ) {
+                var n = start,
+                    count = 0;
+
+                on( "set", function( num ) {
+                    n = num;
+                    count = 0;
+                } );
+
+                setInterval( function( ) {
+                    n++;
+                    for (var i = 2; i <= Math.sqrt(n); i+=2 )
+                        if (n % i === 0)
+                            return;
+
+                    // found a prime!
+                    post( "prime", [n, ++count] );
+                }, 1 );
+            } );
+
+            t.on( "prime", function( n, c ) {
+                prime.textContent = n + " (" + c + "nth Prime)";
+            } ).on( "error", function( ) {
+                console.log( arguments );
+            } );
+
+            t.start( { start: 1 } );
+        </script>
+    </body>
+</html>
